@@ -14,6 +14,7 @@
 
             <thead>
             <tr>
+                <th>#</th>
                 <th>Nombre</th>
                 <th>Correo Electronico</th>
                 <th>Role</th>
@@ -23,7 +24,25 @@
             </tr>
             </thead>
 
-            <tbody></tbody>
+            <tbody>
+                <tr v-for="(user, index) in users" :key="user.id">
+                <td v-text="index + 1"></td>
+                <td v-text="user.name"></td>
+                <td v-text="user.email"></td>
+                <td v-text="user.role"></td>
+                <td>
+                    <div class="btn-group">
+                        <button class="btn btn-warning btn-md">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger btn-md">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
 
         </table>
 
@@ -41,7 +60,7 @@
                             v-text="modalTitle"
                         ></h4>
 
-                        <button @click=""
+                        <button @click="closeModal()"
                                 class="close"
                                 aria-label="Close">
                             <span aria-hidden="true">×</span>
@@ -132,8 +151,8 @@
                     </div>
                     <div class="modal-footer">
 
-                        <button @click=""
-                                class="btn btn-secondary">
+                        <button @click="closeModal()"
+                                class="btn btn-secondary btn-md btn-block">
                             Close
                         </button>
 
@@ -170,6 +189,12 @@
 
                 this.modal = 1
                 this.modalTitle = 'Crear Usuario'
+
+            },
+            closeModal() {
+
+                this.modal = 0
+                this.modalTitle = ''
 
             },
 

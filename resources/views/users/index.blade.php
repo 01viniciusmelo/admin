@@ -4,6 +4,6 @@
 
     <h3>Usuarios</h3>
 
-    <users></users>
+    <users :users="{{ json_encode($users) }}"></users>
 
 @endsection
