@@ -3,7 +3,7 @@
     <div class="content">
 
         <button @click="showModal()"
-                class="btn btn-info">
+                class="btn btn-primary">
             <i class="icon-plus"></i>
             nuevo Usuario
         </button>
@@ -32,6 +32,9 @@
                 <td v-text="user.role"></td>
                 <td>
                     <div class="btn-group">
+                        <a :href="`/users/${user.id}`" class="btn btn-info btn-md">
+                            <i class="fa fa-eye"></i>
+                        </a>
                         <button class="btn btn-warning btn-md">
                             <i class="fa fa-edit"></i>
                         </button>

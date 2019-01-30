@@ -38,20 +38,11 @@ class UsersTest extends TestCase
         
     }
     
-    
-    public function an_authenticated_user_can_store_a_user() {
-        
-        $this->withoutExceptionHandling();
-    
-        $this->signIn();
-    
-        
-        
-        
-    }
-    
-  
-    public function an_authenticated_user_can_view_a_user() {
+    /**
+     *   @test
+     *   @throws \Throwable
+     */
+    public function an_authenticated_user_can_view_a_specific_user() {
         
         $this->signIn();
         
