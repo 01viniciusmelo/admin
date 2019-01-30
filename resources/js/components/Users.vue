@@ -80,6 +80,7 @@
                                             Nombre
                                         </label>
                                         <input type="text"
+                                               v-model="userData.name"
                                                id="name"
                                                class="form-control">
                                     </div>
@@ -90,8 +91,11 @@
                                             <strong>*</strong>
                                             Rol
                                         </label>
-                                        <select class="form-control" id="role">
+                                        <select v-model="userData.role" class="form-control" id="role">
                                             <option disabled selected></option>
+                                            <option value="user">Usuario Regular</option>
+                                            <option value="seller">Vendedor</option>
+                                            <option value="admin">Administrador</option>
                                         </select>
                                     </div>
                                 </div>
@@ -102,6 +106,7 @@
                                             Correo Electronico
                                         </label>
                                         <input type="email"
+                                               v-model="userData.email"
                                                id="email"
                                                class="form-control">
                                     </div>
@@ -118,6 +123,7 @@
                                             Contrasena
                                         </label>
                                         <input type="password"
+                                               v-model="userData.password"
                                                id="password"
                                                class="form-control">
                                     </div>
@@ -130,6 +136,7 @@
                                         </label>
                                         <input type="password"
                                                id="password_confirmation"
+                                               v-model="userData.password_confirmation"
                                                class="form-control">
                                     </div>
                                 </div>
@@ -155,11 +162,15 @@
                                 class="btn btn-secondary btn-md btn-block">
                             Close
                         </button>
+                        <button @click="create()"
+                                class="btn btn-success btn-md btn-block">
+                            Crear
+                        </button>
 
                     </div>
                 </div>
             </div>
-        </div>
+    </div>
 
     </div>
 
@@ -169,10 +180,11 @@
 
     export default {
 
-        props: ['users'],
         data() {
 
             return {
+
+                users: [],
 
                 actionType: '',
                 userData: [],
@@ -198,7 +210,51 @@
 
             },
 
+            create() {
+
+                axios.post('/api/users', {
+
+                    'name': this.userData.name,
+                    'email': this.userData.email,
+                    'role': this.userData.role,
+                    'password': this.userData.password,
+                    'password_confirmation': this.userData.password_confirmation,
+
+                })
+                .then( () => {
+
+                    this.closeModal()
+                    this.usersList()
+
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+
+            },
+            usersList() {
+
+                axios.get('/api/users')
+                    .then(res => {
+
+                        this.users = res.data.data
+
+                    })
+                    .catch(err => {
+
+                        console.log(err)
+
+                    })
+
+            }
+
+        },
+        mounted() {
+
+            this.usersList()
+
         }
+
     }
 </script>
 

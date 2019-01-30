@@ -12,6 +12,19 @@ class UsersTest extends TestCase
     
     use RefreshDatabase;
     
+    
+    /**
+    *   @test
+    *   @throws \Throwable
+    */
+    public function can_get_all_users() {
+    
+        $response = $this->getJson(route('users.index'))->assertOk();
+        
+        dd($response);
+        
+    }
+    
     /**
     *   @test
     *   @throws \Throwable

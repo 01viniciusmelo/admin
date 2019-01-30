@@ -15,11 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('users.index', [
-            
-            'users' => User::all()
-            
-        ]);
+        return view('users.index');
     }
     
     /**
@@ -37,43 +33,5 @@ class UserController extends Controller
             
         ]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit()
-    {
-        //
-    }
     
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param User $user
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        $user->update($request->all());
-        
-        return redirect()->route('users.show', $user);
-    }
-    
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param User $user
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        $user->delete();
-        
-        return redirect()->route('users.index');
-    }
 }

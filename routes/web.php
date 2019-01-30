@@ -16,10 +16,4 @@ Auth::routes();
 Route::view('/', 'welcome');
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('users', 'UserController', ['only' => ['index']]);
-
-Route::get('users', 'UserController@index')->name('users.index');
-//Route::post('users', 'UserController@store')->name('users.store');
-//Route::get('users/{user}', 'UserController@show')->name('users.show');
-//Route::put('users/{user}', 'UserController@update')->name('users.update');
-//Route::delete('users/{user}', 'UserController@destroy')->name('users.destroy');
+Route::resource('users', 'UserController', ['only' => ['index', 'show']]);

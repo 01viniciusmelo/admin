@@ -31,11 +31,10 @@ class UsersTest extends TestCase
         
         $this->signIn();
         
-        $response = $this->get(route('users.index'));
+        $response = $this->get('/users');
         
         $response->assertOk();
         $response->assertViewIs('users.index');
-        $response->assertViewHas('users');
         
     }
     
