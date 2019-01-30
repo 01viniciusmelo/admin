@@ -11,7 +11,11 @@ class UserController extends ApiController
     
     public function index() {
         
-        return $this->showAll(User::latest('updated_at')->get());
+        return $this->showAll(
+            
+            User::latest('updated_at')->get()
+        
+        );
         
     }
     
@@ -23,10 +27,11 @@ class UserController extends ApiController
      */
     public function store(StoreUserRequest $request)
     {
-        return $this->showOne(
+        User::create(
             
-            User::create($request->all())
-            
+            $request->except('avatar') +
+            ['avatar' => (new User)->uploadImage($request->avatar)]
+        
         );
     }
     
@@ -45,7 +50,7 @@ class UserController extends ApiController
             'name' => $request->input('name') ?? $user->name,
             'email' => $request->input('email') ?? $user->email,
             'role' => $request->input('role') ?? $user->role,
-            'avatar' => $request->input('avatar') ?? $user->avatar,
+            'avatar' => $user->uploadImage($request->avatar, $user->avatar),
             
         ]);
     

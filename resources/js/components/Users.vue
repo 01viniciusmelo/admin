@@ -18,6 +18,7 @@
                 <th>Nombre</th>
                 <th>Correo Electronico</th>
                 <th>Role</th>
+                <th>Avatar</th>
                 <th>
                     <i class="fa fa-ellipsis-h"></i>
                 </th>
@@ -30,6 +31,7 @@
                 <td v-text="user.name"></td>
                 <td v-text="user.email"></td>
                 <td v-text="user.role"></td>
+                <td v-text="user.avatar"></td>
                 <td>
                     <div class="btn-group">
                         <a :href="`/users/${user.id}`" class="btn btn-info btn-md">
@@ -74,7 +76,7 @@
                     </div>
                     <div class="modal-body">
 
-                        <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                        <form method="post" enctype="multipart/form-data" class="form-horizontal">
 
                             <div class="row">
 
@@ -149,14 +151,14 @@
                                                required>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" style="margin-top: 30px;">
                                     <div class="form-group">
                                         <label for="avatar">
-                                            Avatar
+                                            <span class="btn btn-primary btn-block btn-md">
+                                                <i class="fa fa-picture-o" aria-hidden="true"> Avatar</i>
+                                                <input type="file" @change="getImage" id="avatar" style="display: none;">
+                                            </span>
                                         </label>
-                                        <input type="text"
-                                               id="avatar"
-                                               class="form-control">
                                     </div>
                                 </div>
 
@@ -213,6 +215,8 @@
 
                 errors: [],
 
+                avatar: null,
+
             }
 
         },
@@ -255,6 +259,9 @@
 
             createOrUpdate(actionType) {
 
+                const formData = new FormData()
+                formData.append('avatar', this.avatar)
+
                 if (actionType === 'Guardar') {
 
                     axios.post('/api/users', {
@@ -264,22 +271,24 @@
                         'role': this.userData.role,
                         'password': this.userData.password,
                         'password_confirmation': this.userData.password_confirmation,
-                        'avatar': this.userData.avatar,
+                        'avatar': this.avatar,
 
                     })
-                        .then( () => {
+                    .then( () => {
 
-                            this.closeModal()
-                            this.usersList()
+                        console.log('Stored!');
 
-                        })
-                        .catch(err => {
+                        this.closeModal()
+                        this.usersList()
 
-                            console.log(err)
+                    })
+                    .catch(err => {
 
-                            this.errors = err.response.data.errors
+                        console.log(err)
 
-                        })
+                        this.errors = err.response.data.errors
+
+                    })
 
                 }
 
@@ -290,10 +299,12 @@
                         'name': this.userData.name,
                         'email': this.userData.email,
                         'role': this.userData.role,
-                        'avatar': this.userData.avatar,
+                        'avatar': this.avatar,
 
                     })
                     .then( () => {
+
+                        console.log('Updated!');
 
                         this.closeModal()
                         this.usersList()
@@ -328,6 +339,8 @@
                 axios.delete(`/api/users/${userId}`)
                     .then( () => {
 
+                        console.log('Deleted!');
+
                         this.usersList()
 
                     })
@@ -337,7 +350,18 @@
 
                     })
 
-            }
+            },
+
+            getImage(event) {
+
+                let fileReader = new FileReader()
+                fileReader.readAsDataURL(event.target.files[0])
+
+                fileReader.onload = (event) => {
+                    this.avatar = event.target.result
+                }
+
+            },
 
         },
         mounted() {
