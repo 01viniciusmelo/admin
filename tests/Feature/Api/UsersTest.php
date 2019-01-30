@@ -34,7 +34,7 @@ class UsersTest extends TestCase
             route('users.store'),
             $this->getUserData()
     
-        )->assertStatus(201);
+        )->assertOk();
     
         $this->assertEquals(1, User::count());
     
@@ -66,6 +66,20 @@ class UsersTest extends TestCase
         $this->assertEquals('alberto.rsesc@protonmail.com', $editedUser->email);
         $this->assertEquals('admin', $editedUser->role);
         $this->assertEquals('/public/img/users/user.jpg', $editedUser->avatar);
+        
+    }
+    
+    /**
+    *   @test
+    *   @throws \Throwable
+    */
+    public function can_delete_a_specific_user() {
+        
+        $this->deleteJson(
+
+            route('users.destroy', $this->create(User::class))
+
+        )->assertOk();
         
     }
 

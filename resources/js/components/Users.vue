@@ -39,7 +39,8 @@
                                 class="btn btn-warning btn-md">
                             <i class="fa fa-edit"></i>
                         </button>
-                        <button class="btn btn-danger btn-md">
+                        <button @click="destroy(user.id)"
+                                class="btn btn-danger btn-md">
                             <i class="fa fa-trash"></i>
                         </button>
                     </div>
@@ -312,7 +313,22 @@
                 axios.get('/api/users')
                     .then(res => {
 
-                        this.users = res.data.data
+                        this.users = res.data.data.data
+
+                    })
+                    .catch(err => {
+
+                        console.log(err)
+
+                    })
+
+            },
+            destroy(userId) {
+
+                axios.delete(`/api/users/${userId}`)
+                    .then( () => {
+
+                        this.usersList()
 
                     })
                     .catch(err => {
