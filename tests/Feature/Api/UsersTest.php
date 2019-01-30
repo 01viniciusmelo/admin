@@ -19,9 +19,7 @@ class UsersTest extends TestCase
     */
     public function can_get_all_users() {
     
-        $response = $this->getJson(route('users.index'))->assertOk();
-        
-        dd($response);
+        $this->getJson(route('users.index'))->assertOk();
         
     }
     
@@ -45,6 +43,29 @@ class UsersTest extends TestCase
         $this->assertEquals('alberto.rsesc@protonmail.com', $user->email);
         $this->assertEquals('admin', $user->role);
         $this->assertEquals('/public/img/users/user.jpg', $user->avatar);
+        
+    }
+    
+    /**
+     *   @test
+     *   @throws \Throwable
+     */
+    public function can_update_a_user() {
+        
+        $userToEdit = $this->create(User::class);
+        
+        $this->putJson(
+            
+            route('users.update', $userToEdit),
+            $this->getUserData()
+        
+        )->assertOk();
+        
+        $editedUser = User::find($userToEdit->id);
+        $this->assertEquals('Alberto Rosas E.', $editedUser->name);
+        $this->assertEquals('alberto.rsesc@protonmail.com', $editedUser->email);
+        $this->assertEquals('admin', $editedUser->role);
+        $this->assertEquals('/public/img/users/user.jpg', $editedUser->avatar);
         
     }
 

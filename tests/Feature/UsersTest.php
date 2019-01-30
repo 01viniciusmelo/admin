@@ -57,30 +57,6 @@ class UsersTest extends TestCase
     }
     
 
-    public function an_authenticated_user_can_update_a_user() {
-        
-        $userToEdit = $this->create(User::class);
-        
-        $this->signIn();
-        
-        $response = $this->put(
-            
-            route('users.update', $userToEdit),
-            $this->getUserData()
-        
-        );
-        
-        $response->assertRedirect(route('users.show', $userToEdit));
-        
-        $editedUser = User::find($userToEdit->id);
-        $this->assertEquals('Alberto Rosas E.', $editedUser->name);
-        $this->assertEquals('alberto.rsesc@protonmail.com', $editedUser->email);
-        $this->assertEquals('admin', $editedUser->role);
-        $this->assertEquals('/public/img/users/user.jpg', $editedUser->avatar);
-        
-    }
-    
-
     public function an_authenticated_user_can_delete_a_user() {
     
         $userToDestroy = $this->create(User::class);

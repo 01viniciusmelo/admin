@@ -4,6 +4,10 @@
 
     <div class="row">
 
+        <a href="/users" class="btn btn-primary btn-md">
+            Usuarios
+        </a>
+
         <img src="..." class="img-thumbnail" alt="...">
 
     </div>

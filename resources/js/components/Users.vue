@@ -2,7 +2,7 @@
 
     <div class="content">
 
-        <button @click="showModal()"
+        <button @click="showModal('create')"
                 class="btn btn-primary">
             <i class="icon-plus"></i>
             nuevo Usuario
@@ -35,7 +35,8 @@
                         <a :href="`/users/${user.id}`" class="btn btn-info btn-md">
                             <i class="fa fa-eye"></i>
                         </a>
-                        <button class="btn btn-warning btn-md">
+                        <button @click="showModal('update', user)"
+                                class="btn btn-warning btn-md">
                             <i class="fa fa-edit"></i>
                         </button>
                         <button class="btn btn-danger btn-md">
@@ -79,22 +80,23 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="name">
-                                            <strong class="danger">*</strong>
+                                            <strong class="text-red">*</strong>
                                             Nombre
                                         </label>
                                         <input type="text"
                                                v-model="userData.name"
                                                id="name"
-                                               class="form-control">
+                                               class="form-control"
+                                               required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="role">
-                                            <strong class="danger">*</strong>
+                                            <strong class="text-red">*</strong>
                                             Rol
                                         </label>
-                                        <select v-model="userData.role" class="form-control" id="role">
+                                        <select v-model="userData.role" class="form-control" id="role" required>
                                             <option disabled selected></option>
                                             <option value="user">Usuario Regular</option>
                                             <option value="seller">Vendedor</option>
@@ -105,13 +107,14 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="email">
-                                            <strong class="danger">*</strong>
+                                            <strong class="text-red">*</strong>
                                             Correo Electronico
                                         </label>
                                         <input type="email"
                                                v-model="userData.email"
                                                id="email"
-                                               class="form-control">
+                                               class="form-control"
+                                               required>
                                     </div>
                                 </div>
 
@@ -128,7 +131,8 @@
                                         <input type="password"
                                                v-model="userData.password"
                                                id="password"
-                                               class="form-control">
+                                               class="form-control"
+                                               required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -140,7 +144,8 @@
                                         <input type="password"
                                                id="password_confirmation"
                                                v-model="userData.password_confirmation"
-                                               class="form-control">
+                                               class="form-control"
+                                               required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -162,7 +167,7 @@
 
                             <div class="div-error">
                                 <ul>
-                                    <li v-for="error in errors" v-text="error" class="pull-left"></li>
+                                    <li v-for="error in errors" v-text="error" class="pull-left text-red"></li>
                                 </ul>
                             </div>
 
@@ -175,9 +180,9 @@
                                 class="btn btn-secondary btn-md">
                             Close
                         </button>
-                        <button @click="create()"
-                                class="btn btn-success btn-md">
-                            Crear
+                        <button @click="createOrUpdate(actionType)"
+                                class="btn btn-success btn-md"
+                                v-text="actionType">
                         </button>
 
                     </div>
@@ -198,7 +203,7 @@
             return {
 
                 users: [],
-
+                userId: 0,
                 actionType: '',
                 userData: [],
 
@@ -212,10 +217,32 @@
         },
         methods: {
 
-            showModal() {
+            showModal(action, data = []) {
+
+                this.usersList()
 
                 this.modal = 1
-                this.modalTitle = 'Crear Usuario'
+
+                if (action === 'create') {
+
+                    this.modalTitle = 'Crear Usuario'
+                    this.actionType = 'Guardar'
+                    this.userData = []
+
+                }
+
+                if (action === 'update') {
+
+                    this.modalTitle = `Actualizar el Usuario: ${data.name}`
+                    this.actionType = 'Actualizar'
+
+                    this.userId = data.id
+                    this.userData.name = data.name
+                    this.userData.email = data.email
+                    this.userData.role = data.role
+                    this.userData.avatar = data.avatar
+
+                }
 
             },
             closeModal() {
@@ -225,30 +252,59 @@
 
             },
 
-            create() {
+            createOrUpdate(actionType) {
 
-                axios.post('/api/users', {
+                if (actionType === 'Guardar') {
 
-                    'name': this.userData.name,
-                    'email': this.userData.email,
-                    'role': this.userData.role,
-                    'password': this.userData.password,
-                    'password_confirmation': this.userData.password_confirmation,
+                    axios.post('/api/users', {
 
-                })
-                .then(res => {
+                        'name': this.userData.name,
+                        'email': this.userData.email,
+                        'role': this.userData.role,
+                        'password': this.userData.password,
+                        'password_confirmation': this.userData.password_confirmation,
+                        'avatar': this.userData.avatar,
 
-                    this.closeModal()
-                    this.usersList()
+                    })
+                        .then( () => {
 
-                })
-                .catch(err => {
+                            this.closeModal()
+                            this.usersList()
 
-                    console.log(err)
+                        })
+                        .catch(err => {
 
-                    this.errors = err.response.data.errors
+                            console.log(err)
 
-                })
+                            this.errors = err.response.data.errors
+
+                        })
+
+                }
+
+                if (actionType === 'Actualizar') {
+
+                    axios.put(`/api/users/${this.userId}`, {
+
+                        'name': this.userData.name,
+                        'email': this.userData.email,
+                        'role': this.userData.role,
+                        'avatar': this.userData.avatar,
+
+                    })
+                    .then( () => {
+
+                        this.closeModal()
+                        this.usersList()
+
+                    })
+                    .catch(err => {
+
+                        console.log(err)
+
+                    })
+
+                }
 
             },
             usersList() {
@@ -307,11 +363,10 @@
         display: flex;
         justify-content: center;
         width: 100%;
-        color: red;
 
     }
 
-    .danger {
+    .text-red {
         color: red;
         font-weight:bold;
     }

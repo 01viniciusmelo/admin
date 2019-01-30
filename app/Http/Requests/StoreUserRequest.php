@@ -28,7 +28,8 @@ class StoreUserRequest extends FormRequest
             'name' => ['required'],
             'email' => ['required', 'email', 'unique:users,email'],
             'role' => ['required'],
-            'password' => ['required', 'confirmed']
+            'password' => ['required', 'confirmed'],
+            'password_confirmation' => ['required']
             
         ];
     }
@@ -47,6 +48,8 @@ class StoreUserRequest extends FormRequest
             
             'password.required' => 'La *Contrasena es requerida.',
             'password.confirmed' => 'La *Contrasena debe ser confirmada.',
+            
+            'password_confirmation.required' => 'La *Confirmacion de Contrasena es requerida.'
             
         ];
     }

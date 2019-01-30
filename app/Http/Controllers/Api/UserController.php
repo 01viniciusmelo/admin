@@ -43,7 +43,14 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user->update($request->all());
+        $user->update([
+            
+            'name' => $request->input('name') ?? $user->name,
+            'email' => $request->input('email') ?? $user->email,
+            'role' => $request->input('role') ?? $user->role,
+            'avatar' => $request->input('avatar') ?? $user->avatar,
+            
+        ]);
     }
     
     /**
