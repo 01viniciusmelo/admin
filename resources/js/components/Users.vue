@@ -79,7 +79,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="name">
-                                            <strong>*</strong>
+                                            <strong class="danger">*</strong>
                                             Nombre
                                         </label>
                                         <input type="text"
@@ -91,7 +91,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="role">
-                                            <strong>*</strong>
+                                            <strong class="danger">*</strong>
                                             Rol
                                         </label>
                                         <select v-model="userData.role" class="form-control" id="role">
@@ -105,7 +105,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="email">
-                                            <strong>*</strong>
+                                            <strong class="danger">*</strong>
                                             Correo Electronico
                                         </label>
                                         <input type="email"
@@ -122,7 +122,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="password">
-                                            <strong>*</strong>
+                                            <strong class="danger">*</strong>
                                             Contrasena
                                         </label>
                                         <input type="password"
@@ -134,7 +134,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="password_confirmation">
-                                            <strong>*</strong>
+                                            <strong class="danger">*</strong>
                                             Confirmar Contrasena
                                         </label>
                                         <input type="password"
@@ -158,15 +158,25 @@
 
                         </form>
 
+                        <div v-if="errors" class="col-md-12">
+
+                            <div class="div-error">
+                                <ul>
+                                    <li v-for="error in errors" v-text="error" class="pull-left"></li>
+                                </ul>
+                            </div>
+
+                        </div>
+
                     </div>
                     <div class="modal-footer">
 
                         <button @click="closeModal()"
-                                class="btn btn-secondary btn-md btn-block">
+                                class="btn btn-secondary btn-md">
                             Close
                         </button>
                         <button @click="create()"
-                                class="btn btn-success btn-md btn-block">
+                                class="btn btn-success btn-md">
                             Crear
                         </button>
 
@@ -193,7 +203,9 @@
                 userData: [],
 
                 modal: 0,
-                modalTitle: ''
+                modalTitle: '',
+
+                errors: [],
 
             }
 
@@ -224,14 +236,18 @@
                     'password_confirmation': this.userData.password_confirmation,
 
                 })
-                .then( () => {
+                .then(res => {
 
                     this.closeModal()
                     this.usersList()
 
                 })
                 .catch(err => {
+
                     console.log(err)
+
+                    this.errors = err.response.data.errors
+
                 })
 
             },
@@ -286,7 +302,17 @@
 
     }
 
-    strong {
+    .div-error {
+
+        display: flex;
+        justify-content: center;
+        width: 100%;
         color: red;
+
+    }
+
+    .danger {
+        color: red;
+        font-weight:bold;
     }
 </style>

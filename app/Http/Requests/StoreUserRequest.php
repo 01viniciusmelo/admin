@@ -27,6 +27,7 @@ class StoreUserRequest extends FormRequest
             
             'name' => ['required'],
             'email' => ['required', 'email', 'unique:users,email'],
+            'role' => ['required'],
             'password' => ['required', 'confirmed']
             
         ];
@@ -39,8 +40,10 @@ class StoreUserRequest extends FormRequest
             'name.required' => 'El *Nombre de Usuario es requerido.',
             
             'email.required' => 'El *Correo Electronico es requerido.',
-            'email.email' => 'El *Correo Electronico debe ser un Correo Electronico valido: Ej. "usuario@correo.com".',
+            'email.email' => 'El *Correo Electronico debe ser un Correo Electronico valido: Ej. usuario@correo.com.',
             'email.unique' => 'El *Correo Electronico ya fue creado, favor de elegir otro.',
+            
+            'role.required' => 'El *Rol es requerido.',
             
             'password.required' => 'La *Contrasena es requerida.',
             'password.confirmed' => 'La *Contrasena debe ser confirmada.',
