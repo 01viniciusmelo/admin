@@ -23,22 +23,6 @@ class UserController extends Controller
     }
     
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param StoreUserRequest $request
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreUserRequest $request)
-    {
-        
-        User::create($request->all());
-    
-        return redirect()->route('users.index');
-    
-    }
-    
-    /**
      * Display the specified resource.
      *
      * @param User $user

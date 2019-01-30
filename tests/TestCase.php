@@ -20,6 +20,23 @@ abstract class TestCase extends BaseTestCase
     }
     
     /**
+     * @return array
+     */
+    public function getUserData () : array {
+        
+        $usersData = [
+            'name' => 'Alberto Rosas E.',
+            'email' => 'alberto.rsesc@protonmail.com',
+            'role' => User::ROLES[0],
+            'avatar' => '/public/img/users/user.jpg',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ];
+        
+        return $usersData;
+    }
+    
+    /**
      * factory()->create();
      *
      * @param $class

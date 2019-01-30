@@ -39,36 +39,19 @@ class UsersTest extends TestCase
         
     }
     
-    /**
-    *   @test
-    *   @throws \Throwable
-    */
+    
     public function an_authenticated_user_can_store_a_user() {
         
         $this->withoutExceptionHandling();
     
         $this->signIn();
     
-        $this->post(
-            route('users.store'),
-            $this->getUserData()
-        )->assertRedirect(route('users.index'));
-    
-        $this->assertEquals(2, User::count());
-    
-        $user = User::find(2);
-        $this->assertEquals('Alberto Rosas E.', $user->name);
-        $this->assertEquals('alberto.rsesc@protonmail.com', $user->email);
-        $this->assertEquals('admin', $user->role);
-        $this->assertEquals('/public/img/users/user.jpg', $user->avatar);
+        
         
         
     }
     
-    /**
-     *   @test
-     *   @throws \Throwable
-     */
+  
     public function an_authenticated_user_can_view_a_user() {
         
         $this->signIn();
@@ -83,10 +66,7 @@ class UsersTest extends TestCase
         
     }
     
-    /**
-     *   @test
-     *   @throws \Throwable
-     */
+
     public function an_authenticated_user_can_update_a_user() {
         
         $userToEdit = $this->create(User::class);
@@ -110,10 +90,7 @@ class UsersTest extends TestCase
         
     }
     
-    /**
-    *   @test
-    *   @throws \Throwable
-    */
+
     public function an_authenticated_user_can_delete_a_user() {
     
         $userToDestroy = $this->create(User::class);
@@ -128,23 +105,6 @@ class UsersTest extends TestCase
     
         $this->assertDatabaseMissing('users', $userToDestroy->toArray());
         
-    }
-    
-    /**
-     * @return array
-     */
-    private function getUserData () : array {
-        
-        $usersData = [
-            'name' => 'Alberto Rosas E.',
-            'email' => 'alberto.rsesc@protonmail.com',
-            'role' => User::ROLES[0],
-            'avatar' => '/public/img/users/user.jpg',
-            'password' => 'password',
-            'password_confirmation' => 'password',
-        ];
-        
-        return $usersData;
     }
     
 }
