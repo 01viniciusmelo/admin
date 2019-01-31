@@ -8,16 +8,16 @@
 <a name="#installation"></a>
 ### Installation
 
-- `git clone `
+- `git clone https://github.com/Bcryp7/admin.git`
 - `cd admin`
 - `composer install`
+- `npm install`
 - `cp .env.example .env`
 - `php artisan key:generate`
-- `npm install`
 - `php artisan serve`
 - `npm run watch`
 
-- Or Execute [setup.sh](setup.sh)
+- Or you can just Execute - [setup.sh](setup.sh)
 
 
 <a name="#testsuite"></a>
