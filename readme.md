@@ -1,5 +1,8 @@
 ### Administrate Users
 
+![Admin](https://i.imgur.com/eUsLHxk.png)
+
+
 *   [Installation](#installation)
 *   [TestSuite](#testsuite)
 *   [EndPoints](#endpoints)
@@ -14,6 +17,8 @@
 - `npm install`
 - `cp .env.example .env`
 - `php artisan key:generate`
+- Setup DB credentials
+- `php artisan migrate --seed`
 - `php artisan serve`
 - `npm run watch`
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [! '.env']
+if [[ ! -f "/.env" ]]
 then
     composer install;
     npm install;
@@ -8,5 +8,8 @@ then
     php artisan key:generate;
 fi
 
-rm public/*.jpg
-php artisan migrate:refresh --seed;
+if [[ ! -f "/public/*.jpg" ]]
+then
+    rm public/*.jpg
+fi
+
