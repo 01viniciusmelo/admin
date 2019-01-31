@@ -42,9 +42,9 @@ class User extends Authenticatable
         parent::boot();
         
         self::deleting(function($user) {
-    
+
             $user->deleteAvatar($user->avatar);
-            
+
         });
         
     }

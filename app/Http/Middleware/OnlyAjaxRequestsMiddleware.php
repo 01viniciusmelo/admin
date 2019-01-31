@@ -15,7 +15,7 @@ class OnlyAjaxRequestsMiddleware
      */
     public function handle($request, Closure $next)
     {
-        abort_if(! $request->ajax(), 403);
+        abort_unless($request->wantsJson(), 403);
         
         return $next($request);
     }

@@ -16,11 +16,27 @@ class UsersTest extends TestCase
      *   @test
      *   @throws \Throwable
      */
-    public function a_guest_user_cannot_visit_home() {
+    public function a_guest_cannot_visit_home() {
         
         $this->get(route('home'))
              ->assertStatus(302)
              ->assertSee('/login');
+    }
+    
+    /**
+     *   @test
+     *   @throws \Throwable
+     */
+    public function a_guest_cannot_visit_a_specific_user() {
+        
+        $someUser = $this->create(User::class);
+        
+        $this->get(
+            
+            "/users/$someUser->id"
+            
+        )->assertStatus(302)
+         ->assertSee('/login');
     }
     
     /**
@@ -48,28 +64,11 @@ class UsersTest extends TestCase
         
         $user = $this->create(User::class);
         
-        $response = $this->get(route('users.show', $user));
+        $response = $this->get('/users/' . $user->id);
         
         $response->assertOk();
         $response->assertViewIs('users.show');
         $response->assertViewHas('user');
-        
-    }
-    
-
-    public function an_authenticated_user_can_delete_a_user() {
-    
-        $userToDestroy = $this->create(User::class);
-    
-        $this->signIn();
-    
-        $this->delete(
-            
-            route('users.destroy', $userToDestroy)
-        
-        )->assertRedirect(route('users.index'));
-    
-        $this->assertDatabaseMissing('users', $userToDestroy->toArray());
         
     }
     

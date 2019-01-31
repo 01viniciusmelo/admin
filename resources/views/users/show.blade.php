@@ -10,14 +10,17 @@
 
     <div class="row">
 
+        @if (! empty($user->avatar))
        <div class="col-md-6 pull-left">
+
            <div class="card" style="width: 18rem;">
                <img src="{{ 'http://localhost:3000/' . $user->avatar }}" class="img-fluid">
            </div>
-       </div>
 
-        <div class="col-md-6 pull-right">
-            <table class="table">
+       </div>
+        @endif
+        <div class="col-md- pull-right">
+            <table class="table" width="100%">
                 <thead>
                 <tr>
                     <th scope="col">Nombre</th>

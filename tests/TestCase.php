@@ -22,16 +22,18 @@ abstract class TestCase extends BaseTestCase
     /**
      * @return array
      */
-    public function getUserData () : array {
+    public function getUserData ($override = []) : array {
         
-        $usersData = [
+        $usersData = array_merge([
+        
             'name' => 'Alberto Rosas E.',
             'email' => 'alberto.rsesc@protonmail.com',
             'role' => User::ROLES[0],
-            'avatar' => '/public/img/users/user.jpg',
             'password' => 'password',
             'password_confirmation' => 'password',
-        ];
+            'avatar' => 'data:image/jpeg;base64,/9j/4gIcSUNDX1BST0ZJTEUAAQEAAAIMbGNtcwIQ'
+        
+        ], $override);
         
         return $usersData;
     }

@@ -11,6 +11,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 3)->create();
+        
+        factory(\App\User::class)->create([
+            
+            'email' => 'admin@admin.com',
+            'avatar' => 'avatar.png'
+        
+        ]);
+        
+        $this->command->info('#======================#');
+    
+        $this->command->info('');
+        $this->command->info('Usuario Administrador: admin@admin.com');
+        $this->command->info('Contrasena: password');
+        $this->command->info('');
+        
+        $this->command->info('#======================#');
+        
     }
 }

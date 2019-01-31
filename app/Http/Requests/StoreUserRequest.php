@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreUserRequest extends FormRequest
 {
@@ -27,7 +28,12 @@ class StoreUserRequest extends FormRequest
             
             'name' => ['required'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'role' => ['required'],
+            'role' => [
+                
+                'required',
+                Rule::in(['admin', 'seller', 'user'])
+            
+            ],
             'password' => ['required', 'confirmed'],
             'password_confirmation' => ['required']
             
@@ -45,6 +51,7 @@ class StoreUserRequest extends FormRequest
             'email.unique' => 'El *Correo Electronico ya fue creado, favor de elegir otro.',
             
             'role.required' => 'El *Rol es requerido.',
+            'role.in' => 'El *Rol seleccionado no es valido.',
             
             'password.required' => 'La *Contrasena es requerida.',
             'password.confirmed' => 'La *Contrasena debe ser confirmada.',

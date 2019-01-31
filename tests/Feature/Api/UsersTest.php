@@ -12,6 +12,13 @@ class UsersTest extends TestCase
     
     use RefreshDatabase;
     
+    protected function setUp () {
+    
+        parent::setUp();
+    
+        $this->withMiddleware('ajax');
+        
+    }
     
     /**
     *   @test
@@ -28,7 +35,7 @@ class UsersTest extends TestCase
     *   @throws \Throwable
     */
     public function can_store_a_user() {
-        
+    
         $this->postJson(
         
             route('users.store'),
@@ -42,7 +49,6 @@ class UsersTest extends TestCase
         $this->assertEquals('Alberto Rosas E.', $user->name);
         $this->assertEquals('alberto.rsesc@protonmail.com', $user->email);
         $this->assertEquals('admin', $user->role);
-        $this->assertEquals('/public/img/users/user.jpg', $user->avatar);
         
     }
     
@@ -53,7 +59,7 @@ class UsersTest extends TestCase
     public function can_update_a_user() {
         
         $userToEdit = $this->create(User::class);
-        
+    
         $this->putJson(
             
             route('users.update', $userToEdit),
@@ -61,12 +67,11 @@ class UsersTest extends TestCase
         
         )->assertOk();
         
-        $editedUser = User::find($userToEdit->id);
-        $this->assertEquals('Alberto Rosas E.', $editedUser->name);
-        $this->assertEquals('alberto.rsesc@protonmail.com', $editedUser->email);
-        $this->assertEquals('admin', $editedUser->role);
-        $this->assertEquals('/public/img/users/user.jpg', $editedUser->avatar);
-        
+        $updatedUser = User::find($userToEdit->id);
+        $this->assertEquals('Alberto Rosas E.', $updatedUser->name);
+        $this->assertEquals('alberto.rsesc@protonmail.com', $updatedUser->email);
+        $this->assertEquals('admin', $updatedUser->role);
+    
     }
     
     /**
@@ -75,13 +80,16 @@ class UsersTest extends TestCase
     */
     public function can_delete_a_specific_user() {
         
+        $user = $this->create(User::class);
+        
         $this->deleteJson(
 
-            route('users.destroy', $this->create(User::class))
+            route('users.destroy', $user)
 
         )->assertOk();
         
+        $this->assertDatabaseMissing('users', $user->toArray());
+        
     }
-
 
 }

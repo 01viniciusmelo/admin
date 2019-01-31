@@ -18,7 +18,6 @@
                 <th>Nombre</th>
                 <th>Correo Electronico</th>
                 <th>Role</th>
-                <th>Avatar</th>
                 <th>
                     <i class="fa fa-ellipsis-h"></i>
                 </th>
@@ -31,7 +30,6 @@
                 <td v-text="user.name"></td>
                 <td v-text="user.email"></td>
                 <td v-text="user.role"></td>
-                <td v-text="user.avatar"></td>
                 <td>
                     <div class="btn-group">
                         <a :href="`/users/${user.id}`" class="btn btn-info btn-md">

@@ -25,7 +25,7 @@ $factory->define(User::class, function (Faker $faker) {
             User::ROLES[2]
         
         ]),
-        'avatar' => $faker->imageUrl('200', '200'),
+        'avatar' => 'data:image/jpeg;base64,/9j/4gIcSUNDX1BST0ZJTEUAAQEAAAIMbGNtcwIQ',
         'email_verified_at' => now(),
         'password' => bcrypt('password'), // secret
         'remember_token' => str_random(10),
