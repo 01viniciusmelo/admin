@@ -46,14 +46,17 @@ class UserController extends ApiController
     public function update(Request $request, User $user)
     {
         $user->update([
-            
+    
             'name' => $request->input('name') ?? $user->name,
             'email' => $request->input('email') ?? $user->email,
             'role' => $request->input('role') ?? $user->role,
-            'avatar' => $user->uploadImage($request->avatar, $user->avatar),
-            
+            'password' => bcrypt($request->input('password')) ?? $user->password,
+            'avatar' => $request->filled('avatar') ?
+                $user->uploadImage($request->avatar, $user->avatar) :
+                $user->avatar,
+
         ]);
-    
+        
         return $this->showOne($user);
         
     }
