@@ -35,7 +35,7 @@ class UsersTest extends TestCase
     *   @throws \Throwable
     */
     public function can_store_a_user() {
-    
+        
         $this->postJson(
         
             route('users.store'),
@@ -48,7 +48,7 @@ class UsersTest extends TestCase
         $user = User::find(1);
         $this->assertEquals('Alberto Rosas E.', $user->name);
         $this->assertEquals('alberto.rsesc@protonmail.com', $user->email);
-        $this->assertEquals('admin', $user->role);
+        $this->assertEquals('admin', $user->role->name);
         
     }
     
@@ -70,7 +70,7 @@ class UsersTest extends TestCase
         $updatedUser = User::find($userToEdit->id);
         $this->assertEquals('Alberto Rosas E.', $updatedUser->name);
         $this->assertEquals('alberto.rsesc@protonmail.com', $updatedUser->email);
-        $this->assertEquals('admin', $updatedUser->role);
+        $this->assertEquals('admin', $updatedUser->role->name);
     
     }
     

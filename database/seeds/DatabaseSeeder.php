@@ -4,6 +4,14 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    
+    private $seeders = [
+    
+        RoleSeeder::class,
+        UserSeeder::class,
+        
+    ];
+    
     /**
      * Seed the application's database.
      *
@@ -12,12 +20,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         
-        factory(\App\User::class)->create([
-            
-            'email' => 'admin@admin.com',
-            'avatar' => 'avatar.png'
-        
-        ]);
+        $this->call($this->seeders);
         
         $this->command->info('#======================#');
     

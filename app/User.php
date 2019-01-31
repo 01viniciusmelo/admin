@@ -10,14 +10,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable, ImagesTrait;
-    
-    const ROLES = [
-        
-        'admin',
-        'seller',
-        'user'
-        
-    ];
 
     /**
      * The attributes that are mass assignable.
@@ -25,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role', 'avatar'
+        'name', 'email', 'password', 'role_id', 'avatar'
     ];
 
     /**
@@ -48,4 +40,11 @@ class User extends Authenticatable
         });
         
     }
+    
+    public function role() {
+    
+        return $this->belongsTo(Role::class);
+        
+    }
+    
 }

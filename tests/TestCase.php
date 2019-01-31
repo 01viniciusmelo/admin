@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Role;
 use App\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
@@ -20,6 +21,7 @@ abstract class TestCase extends BaseTestCase
     }
     
     /**
+     * @param array $override
      * @return array
      */
     public function getUserData ($override = []) : array {
@@ -28,7 +30,7 @@ abstract class TestCase extends BaseTestCase
         
             'name' => 'Alberto Rosas E.',
             'email' => 'alberto.rsesc@protonmail.com',
-            'role' => User::ROLES[0],
+            'role_id' => $this->create(Role::class, ['name' => 'admin'])->id,
             'password' => 'password',
             'password_confirmation' => 'password',
             'avatar' => 'data:image/jpeg;base64,/9j/4gIcSUNDX1BST0ZJTEUAAQEAAAIMbGNtcwIQ'

@@ -93,15 +93,16 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="role">
+                                        <label for="role_id">
                                             <strong class="text-red">*</strong>
                                             Rol
                                         </label>
-                                        <select v-model="userData.role" class="form-control" id="role" required>
-                                            <option disabled selected></option>
-                                            <option value="user">Usuario Regular</option>
-                                            <option value="seller">Vendedor</option>
-                                            <option value="admin">Administrador</option>
+                                        <select v-model="userData.role_id" class="form-control" id="role_id" required>
+                                            <option v-for="role in roles"
+                                                    :key="role.id"
+                                                    v-text="role.display_name"
+                                                    :value="role.id"
+                                            ></option>
                                         </select>
                                     </div>
                                 </div>
@@ -144,7 +145,7 @@
                                         </label>
                                         <input type="password"
                                                id="password_confirmation"
-                                               v-model="userData.password_confirmation"
+                                               v-model="userData.password"
                                                class="form-control"
                                                required>
                                     </div>
@@ -204,9 +205,12 @@
             return {
 
                 users: [],
-                userId: 0,
-                actionType: '',
+                roles: [],
                 userData: [],
+
+                userId: 0,
+                role: '',
+                actionType: '',
 
                 modal: 0,
                 modalTitle: '',
@@ -223,6 +227,7 @@
             showModal(action, data = []) {
 
                 this.usersList()
+                this.rolesList()
 
                 this.modal = 1
 
@@ -242,8 +247,10 @@
                     this.userId = data.id
                     this.userData.name = data.name
                     this.userData.email = data.email
-                    this.userData.role = data.role
+                    this.userData.role_id = data.role_id
                     this.userData.avatar = data.avatar
+                    this.userData.password = data.password
+                    this.role = data.role
 
                 }
 
@@ -266,7 +273,7 @@
 
                         'name': this.userData.name,
                         'email': this.userData.email,
-                        'role': this.userData.role,
+                        'role_id': this.userData.role_id,
                         'password': this.userData.password,
                         'password_confirmation': this.userData.password_confirmation,
                         'avatar': this.avatar,
@@ -296,7 +303,8 @@
 
                         'name': this.userData.name,
                         'email': this.userData.email,
-                        'role': this.userData.role,
+                        'role_id': this.userData.role_id,
+                        'password': this.userData.password,
                         'avatar': this.avatar,
 
                     })
@@ -322,7 +330,22 @@
                 axios.get('/api/users')
                     .then(res => {
 
-                        this.users = res.data.data.data
+                        this.users = res.data.data
+
+                    })
+                    .catch(err => {
+
+                        console.log(err)
+
+                    })
+
+            },
+            rolesList() {
+
+                axios.get('/api/roles')
+                    .then(res => {
+
+                        this.roles = res.data.data.data
 
                     })
                     .catch(err => {

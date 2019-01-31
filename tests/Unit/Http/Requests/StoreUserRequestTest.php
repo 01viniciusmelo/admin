@@ -86,29 +86,12 @@ class StoreUserRequestTest extends TestCase
      *   @test
      *   @throws \Throwable
      */
-    public function the_role_field_is_required() {
+    public function the_role_id_field_is_required() {
         
         $response = $this->postJson(
             
             route('users.store'),
-            $this->getUserData(['role' => ''])
-        
-        );
-        
-        $response->assertStatus(422);
-        
-    }
-    
-    /**
-     *   @test
-     *   @throws \Throwable
-     */
-    public function the_role_field_must_be_a_value_between_admin_seller_or_user() {
-        
-        $response = $this->postJson(
-            
-            route('users.store'),
-            $this->getUserData(['role' => 'buyer'])
+            $this->getUserData(['role_id' => ''])
         
         );
         

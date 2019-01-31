@@ -18,13 +18,7 @@ $factory->define(User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'role' => $faker->randomElement([
-            
-            User::ROLES[0],
-            User::ROLES[1],
-            User::ROLES[2]
-        
-        ]),
+        'role_id' => factory(\App\Role::class)->create(),
         'avatar' => 'data:image/jpeg;base64,/9j/4gIcSUNDX1BST0ZJTEUAAQEAAAIMbGNtcwIQ',
         'email_verified_at' => now(),
         'password' => bcrypt('password'), // secret

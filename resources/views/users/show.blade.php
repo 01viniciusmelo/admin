@@ -11,7 +11,7 @@
     <div class="row">
 
         @if (! empty($user->avatar))
-       <div class="col-md-6 pull-left">
+       <div class="col-md-4 pull-left">
 
            <div class="card" style="width: 18rem;">
                <img src="{{ 'http://localhost:3000/' . $user->avatar }}" class="img-fluid">
@@ -19,8 +19,9 @@
 
        </div>
         @endif
-        <div class="col-md- pull-right">
-            <table class="table" width="100%">
+
+        <div class="col-md-8 pull-right">
+            <table class="table table-bordered table-striped" width="100%">
                 <thead>
                 <tr>
                     <th scope="col">Nombre</th>
@@ -30,9 +31,9 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <th scope="row">{{ $user->name }}</th>
+                    <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
-                    <td>{{ $user->role }}</td>
+                    <td>{{ $user->role->display_name }}</td>
                 </tr>
                 </tbody>
             </table>

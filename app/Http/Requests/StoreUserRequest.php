@@ -28,12 +28,7 @@ class StoreUserRequest extends FormRequest
             
             'name' => ['required'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'role' => [
-                
-                'required',
-                Rule::in(['admin', 'seller', 'user'])
-            
-            ],
+            'role_id' => ['required'],
             'password' => ['required', 'confirmed'],
             'password_confirmation' => ['required']
             
@@ -50,8 +45,7 @@ class StoreUserRequest extends FormRequest
             'email.email' => 'El *Correo Electronico debe ser un Correo Electronico valido: Ej. usuario@correo.com.',
             'email.unique' => 'El *Correo Electronico ya fue creado, favor de elegir otro.',
             
-            'role.required' => 'El *Rol es requerido.',
-            'role.in' => 'El *Rol seleccionado no es valido.',
+            'role_id.required' => 'El *Rol es requerido.',
             
             'password.required' => 'La *Contrasena es requerida.',
             'password.confirmed' => 'La *Contrasena debe ser confirmada.',
