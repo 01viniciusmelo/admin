@@ -11,13 +11,13 @@
     <div class="row">
 
         @if (! empty($user->avatar))
-       <div class="col-md-4 pull-left">
+        <div class="col-md-4 pull-left">
 
-           <div class="card" style="width: 18rem;">
+           <div class="card">
                <img src="{{ 'http://localhost:3000/' . $user->avatar }}" class="img-fluid">
            </div>
 
-       </div>
+        </div>
         @endif
 
         <div class="col-md-8 pull-right">

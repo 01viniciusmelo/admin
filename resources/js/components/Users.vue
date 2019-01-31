@@ -145,7 +145,7 @@
                                         </label>
                                         <input type="password"
                                                id="password_confirmation"
-                                               v-model="userData.password"
+                                               v-model="userData.password_confirmation"
                                                class="form-control"
                                                required>
                                     </div>
